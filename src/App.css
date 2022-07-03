@@ -13,7 +13,7 @@
   }
 }
 
-.App-header {
+.App-body {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -26,6 +26,7 @@
 
 .App-link {
   color: #61dafb;
+  margin-top: 0.5em;
 }
 
 @keyframes App-logo-spin {
@@ -34,5 +35,166 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+.bottle {
+  margin: 0em 1em;
+  width: 100px;
+  display: flex;
+  align-items: end;
+  height: 200px;
+  background: #f0f8ff17;
+  border-radius: 10px;
+  position: relative;
+  border: 2px solid whitesmoke;
+  overflow: hidden;
+
+  display: -webkit-flex;
+  -webkit-align-items: end;
+
+  align-items: flex-end;
+  -webkit-align-items: flex-end !important;
+  -ms-flex-align: end !important;
+}
+
+.bottle-body {
+  position: relative;
+  perspective: 1000px;
+  transform: translate(0px, 0px);
+  margin-top: 3em;
+}
+
+.bottle-body canvas {
+  top: -13% !important;
+  left: 0 !important;
+  /* width: 150px;
+  height: 250px; */
+}
+
+.replay-btn {
+  width: 300px;
+  height: 100px;
+  border: 0;
+  background: aliceblue;
+  border-radius: 10px;
+  font-size: 2em;
+  font-family: inherit;
+  box-shadow: 10px 10px;
+  cursor: pointer;
+}
+
+.replay-btn-wrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  background: rgb(33 31 31 / 18%);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(3px);
+}
+
+.bottle-body.complete {
+  animation: shake 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.bottle-body::before {
+  content: " ";
+  position: absolute;
+  width: 50%;
+  background: #3a3e46;
+  height: 15px;
+  top: -7.8%;
+  border-right: 2px solid white;
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 15px 15px 0 0;
+}
+
+.raised {
+  transform: translate(0px, -30px);
+}
+
+.bottle-content {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column-reverse;
+
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.puzzle-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2em;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.water {
+  width: 100px;
+  height: 20px;
+}
+
+@media only screen and (max-width: 860px) {
+  .water {
+    width: 80px;
+    height: 12px;
+  }
+
+  .bottle {
+    margin: 0em 1em;
+    width: 80px;
+    display: flex;
+    align-items: end;
+    height: 120px;
+
+    display: -webkit-flex;
+    -webkit-align-items: end;
+  }
+  .bottle-body::before {
+    top: -9.6%;
+    height: 12px;
+  }
+  .bottle-body {
+    margin-top: 2em;
+  }
+
+  .bottle-body canvas {
+    width: 125px;
+    height: 180px;
   }
 }
