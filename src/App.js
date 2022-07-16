@@ -13,20 +13,20 @@ import { AppWideConfetti } from "./components/Confetti";
 
 function App() {
   const [playCelebrate, { stop: stopCelebrate }] = useSound(celebrateSound, {
-    volume: 0.5,
+    volume: 0.5
   });
   const [playPouring] = useSound(pouringSound, {
-    volume: 0.5,
+    volume: 0.5
   });
 
   const [playPopup] = useSound(popupSound, {
-    volume: 0.5,
+    volume: 0.5
   });
   const [playPopdown] = useSound(popdownSound, {
-    volume: 0.5,
+    volume: 0.5
   });
   const [playFireworks] = useSound(fireworksSound, {
-    volume: 0.05,
+    volume: 0.05
   });
 
   const [bottles, setBottles] = useState([
@@ -34,9 +34,9 @@ function App() {
     new PuzzleBottle(["b", "b", "b", "b", "b", "b", "b", "b", "d", "d"]),
     new PuzzleBottle(["c", "c", "c", "c", "c", "c", "c", "c", "a", "a"]),
     new PuzzleBottle(["a", "a", "a", "a", "a", "a", "a", "a", "b", "b"]),
-    new PuzzleBottle([], false, true),
+    new PuzzleBottle([], false, true)
   ]);
-  const [raisedBottleId, setRaisedBottleId] = useState(null);
+  const [raisedBottleId, setRaisedBottleId] = useState("");
   const [gameComplelte, setGameComplelte] = useState(false);
 
   const initializeBottles = () => {
@@ -47,7 +47,7 @@ function App() {
       new PuzzleBottle(["b", "b", "b", "d", "d", "a", "b", "c", "d", "a"]),
       new PuzzleBottle(["c", "c", "c", "c", "a", "b", "a", "b", "d", "d"]),
       new PuzzleBottle(["a", "c", "c", "a", "d", "d", "a", "b", "c", "c"]),
-      new PuzzleBottle([], false, true),
+      new PuzzleBottle([], false, true)
     ]);
   };
 
@@ -88,7 +88,7 @@ function App() {
       }
       const removed = fromBottle.remove_from_top(no_to_pour);
       toBottle.add_to_top(removed);
-      setRaisedBottleId(null);
+      setRaisedBottleId("");
       playPouring();
       checkWin();
       if (toBottle.complete) {
@@ -98,7 +98,7 @@ function App() {
     }
 
     if (raisedBottleId == bottleId) {
-      setRaisedBottleId(null);
+      setRaisedBottleId("");
       playPopdown();
       return;
     }
@@ -121,6 +121,7 @@ function App() {
         <div className="puzzle-wrapper">
           {bottles.map((bottle) => (
             <Bottle
+              key={bottle.id}
               bottle={bottle}
               raisedBottleId={raisedBottleId}
               onRaise={handleBottleRaise}
