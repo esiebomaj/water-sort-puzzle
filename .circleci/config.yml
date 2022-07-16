@@ -1,0 +1,17 @@
+version: 2.1
+
+jobs:
+  say-hello:
+    docker:
+      - image: cimg/node:18.4.0 
+    steps:
+      - checkout
+      - run:
+          name: "Say hello"
+          command: "echo Hello, World!"
+      - run: echo alas!!! Jerry is here
+
+workflows:
+  say-hello-workflow:
+    jobs:
+      - say-hello
