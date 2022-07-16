@@ -1,3 +1,5 @@
+import proptypes from "proptypes";
+
 const NextRoundBtn = ({ initializeBottles }) => {
   return (
     <div className="replay-btn-wrapper">
@@ -6,6 +8,10 @@ const NextRoundBtn = ({ initializeBottles }) => {
       </button>
     </div>
   );
+};
+
+NextRoundBtn.propTypes = {
+  initializeBottles: proptypes.func.isRequired
 };
 
 export default NextRoundBtn;

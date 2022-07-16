@@ -40,10 +40,7 @@ class PuzzleBottle {
   add_to_top = (colors_to_be_added) => {
     // adds colors_to_be_added to the top of the stack
 
-    if (
-      colors_to_be_added.length + this._bottle_array.length >
-      this._no_of_unit_to_full
-    ) {
+    if (colors_to_be_added.length + this._bottle_array.length > this._no_of_unit_to_full) {
       throw Error("Too many items to add");
     } else {
       this._bottle_array = [...this._bottle_array, ...colors_to_be_added];
