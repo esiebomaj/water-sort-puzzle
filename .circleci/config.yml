@@ -10,6 +10,8 @@ jobs:
           name: install dependecies
           command: npm install
       - run: npm run lint
+      - run: echo << pipeline.id >>
+      - run: echo << pipeline.project.git_url >>
 
   test:
       docker:
