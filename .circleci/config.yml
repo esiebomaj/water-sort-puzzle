@@ -23,6 +23,7 @@ jobs:
         - restore_cache:
             keys:
               - v1-deps-{{ checksum "yarn.lock" }}
+        - run: ls
         - run: yarn
         - run: npm run test
 
