@@ -10,10 +10,11 @@ jobs:
           name: install dependecies
           command: yarn
       - run: npm run lint
+      - run: ls
       - save_cache:
           key: v1-deps-{{ checksum "yarn.lock" }}
           paths:
-            - "./node_modules"
+            - ./node_modules
 
   test:
       docker:
