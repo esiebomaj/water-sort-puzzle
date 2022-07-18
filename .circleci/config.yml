@@ -8,19 +8,22 @@ jobs:
       - checkout
       - run:
           name: install dependecies
-          command: npm install
+          command: yarn
       - run: npm run lint
-      - run: echo << pipeline.id >>
-      - run: echo << pipeline.project.git_url >>
+      - save_cache:
+          key: v1-deps-{{ checksum "yarn.lock" }}
+          paths:
+            - /node_modules
 
   test:
       docker:
         - image: cimg/node:18.4.0 
       steps:
         - checkout
-        - run:
-            name: install dependecies
-            command: npm install
+        - restore_cache:
+            keys:
+              - v1-deps-{{ checksum "yarn.lock" }}
+        - run: yarn
         - run: npm run test
 
 
