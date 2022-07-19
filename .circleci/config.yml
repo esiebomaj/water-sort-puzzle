@@ -41,7 +41,6 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - run: ls
       - run:
           name: Create Cloudformation Stack
           command: |
