@@ -54,7 +54,7 @@ jobs:
 
   configure_infrastructure:
     docker:
-      - image: python:3.7-alphine3.11
+      - image: python:3.9.13-alpine3.16
     steps: 
       - checkout
       - add_ssh_keys:
@@ -74,4 +74,6 @@ workflows:
           requires: 
           - lint
       - create_infrastructure
-      - configure_infrastructure
+      - configure_infrastructure:
+          requires:
+          - create_infrastructure
