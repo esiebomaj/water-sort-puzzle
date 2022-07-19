@@ -41,6 +41,30 @@ jobs:
                 --template-file ./cloudFormation.yml \
                 --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
                 --region us-east-1
+      - run:
+          name: create ansible inventory file
+          command: |
+              echo "[all]" > inventory && \ 
+              aws ec2 describe-instances \
+              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --output text >> inventory
+      - run:
+          name: confirm inventory file was properly created
+          command: cat inventory
+
+  configure_infrastructure:
+    docker:
+      - image: python:3.7-alphine3.11
+    steps: 
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["a8:db:51:9a:82:49:74:d7:1b:35:99:f6:b5:5a:18:3f"] 
+      - run:
+         name: install ansible
+         command: apk add --update ansible
+      - run:
+          name: run ansible playbook
+          command: ansible-playbook -i inventory playbook.yml
 
 workflows:
   CI-workflow:
@@ -50,3 +74,4 @@ workflows:
           requires: 
           - lint
       - create_infrastructure
+      - configure_infrastructure
