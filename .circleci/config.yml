@@ -41,10 +41,11 @@ jobs:
                 --template-file ./cloudFormation.yml \
                 --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
                 --region us-east-1
+      - run: echo "[all]" > inventory
       - run:
-          name: create ansible inventory file
+          name: populate ansible inventory file
           command: |
-              echo "[all]" > inventory 
+              aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory
       - run:
           name: confirm inventory file was properly created
           command: cat inventory
