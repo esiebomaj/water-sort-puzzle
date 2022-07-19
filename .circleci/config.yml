@@ -28,6 +28,17 @@ jobs:
         - run: yarn
         - run: npm run test
 
+  create_infrastructure:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - run:
+          name: Create Cloudformation Stack
+          command: |
+              aws cloudformation deploy \
+                --template-file cloudFormation.yml \
+                --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+                --region us-east-1
 
 workflows:
   CI-workflow:
@@ -36,3 +47,4 @@ workflows:
       - test: 
           requires: 
           - lint
+      - create_infrastructure
