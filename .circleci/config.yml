@@ -44,10 +44,7 @@ jobs:
       - run:
           name: create ansible inventory file
           command: |
-              echo "[all]" > inventory && \ 
-              aws ec2 describe-instances \
-              --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --output text >> inventory
+              echo "[all]" > inventory 
       - run:
           name: confirm inventory file was properly created
           command: cat inventory
