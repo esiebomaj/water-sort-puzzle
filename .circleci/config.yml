@@ -1,5 +1,13 @@
 version: 2.1
 
+commands:
+  destroy_enviroment:
+    steps:
+      - run: 
+          name: destroy enviroment
+          command: aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}
+          when: on_fail
+
 jobs:
   lint:
     docker:
@@ -58,6 +66,8 @@ jobs:
           paths:
             - "inventory"
 
+        
+
   configure_infrastructure:
     docker:
       - image: python:3.9.13-alpine3.16
@@ -82,7 +92,7 @@ jobs:
       - run:
           name: test endpoint using curl
           command: |
-            URL="https://blog.udacity.com/"
+            URL="https://blog.udacitay.com/"
             # Test if website exists
             if curl -s --head ${URL} 
             then
@@ -91,6 +101,9 @@ jobs:
               return 1
             fi
 
+      - destroy_enviroment
+        
+        
 
 workflows:
   CI-workflow:
@@ -99,8 +112,10 @@ workflows:
       # - test: 
       #     requires: 
       #     - lint
-      # - create_infrastructure
+      - create_infrastructure
       # - configure_infrastructure:
       #     requires:
       #     - create_infrastructure
-      - smoke-test
+      - smoke-test:
+          requires:
+            - create_infrastructure
