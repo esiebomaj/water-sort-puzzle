@@ -25,16 +25,16 @@ jobs:
             - node_modules
 
   test:
-      docker:
-        - image: cimg/node:18.4.0 
-      steps:
-        - checkout
-        - restore_cache:
-            keys:
-              - v1-deps-{{ checksum "yarn.lock" }}
-        - run: ls
-        - run: yarn
-        - run: npm run test
+    docker:
+      - image: cimg/node:18.4.0 
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-deps-{{ checksum "yarn.lock" }}
+      - run: ls
+      - run: yarn
+      - run: npm run test
 
   create_infrastructure:
     docker:
@@ -64,6 +64,10 @@ jobs:
           root: ./
           paths:
             - "inventory"
+
+      - run: return 1
+
+      - destroy_enviroment
 
         
 
@@ -100,9 +104,6 @@ jobs:
               return 1
             fi
 
-      - destroy_enviroment
-        
-        
 
 workflows:
   CI-workflow:
@@ -115,6 +116,6 @@ workflows:
       # - configure_infrastructure:
       #     requires:
       #     - create_infrastructure
-      - smoke-test:
-          requires:
-            - create_infrastructure
+      # - smoke-test:
+      #     requires:
+      #       - create_infrastructure
