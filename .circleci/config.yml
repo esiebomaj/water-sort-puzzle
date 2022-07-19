@@ -50,6 +50,11 @@ jobs:
           name: confirm inventory file was properly created
           command: cat inventory
 
+      - run:
+          name: Install tar utility
+          command: |
+            yum install -y tar gzip
+            
       - persist_to_workspace:
           root: ./
           paths:
