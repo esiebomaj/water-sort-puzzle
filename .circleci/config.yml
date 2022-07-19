@@ -50,6 +50,11 @@ jobs:
           name: confirm inventory file was properly created
           command: cat inventory
 
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - "inventory"
+
   configure_infrastructure:
     docker:
       - image: python:3.9.13-alpine3.16
@@ -57,6 +62,8 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: ["a8:db:51:9a:82:49:74:d7:1b:35:99:f6:b5:5a:18:3f"] 
+      - attach_workspace:
+          at: ./
       - run:
          name: install ansible
          command: apk add --update ansible
