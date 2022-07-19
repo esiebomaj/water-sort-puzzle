@@ -46,15 +46,13 @@ jobs:
           name: populate ansible inventory file
           command: |
               aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory
-      - run:
-          name: confirm inventory file was properly created
-          command: cat inventory
 
+      # work space requires tar to be installed
       - run:
           name: Install tar utility
           command: |
             yum install -y tar gzip
-            
+
       - persist_to_workspace:
           root: ./
           paths:
@@ -76,14 +74,32 @@ jobs:
           name: run ansible playbook
           command: ansible-playbook -i inventory playbook.yml
 
+  smoke-test:
+    docker:
+      - image: alphine
+    steps:
+      - run:
+          name: test endpoint using curl
+          command: |
+            URL="https://blog.udacity.com/"
+            # Test if website exists
+            if curl -s --head ${URL} 
+            then
+              return 0
+            else
+              return 1
+            fi
+
+
 workflows:
   CI-workflow:
     jobs:
-      - lint
-      - test: 
-          requires: 
-          - lint
-      - create_infrastructure
-      - configure_infrastructure:
-          requires:
-          - create_infrastructure
+      # - lint
+      # - test: 
+      #     requires: 
+      #     - lint
+      # - create_infrastructure
+      # - configure_infrastructure:
+      #     requires:
+      #     - create_infrastructure
+      - smoke-test
