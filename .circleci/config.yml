@@ -76,8 +76,9 @@ jobs:
 
   smoke-test:
     docker:
-      - image: alphine
+      - image: alpine:latest
     steps:
+      - run: apk add --update curl
       - run:
           name: test endpoint using curl
           command: |
